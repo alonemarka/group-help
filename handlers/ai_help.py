@@ -14,11 +14,11 @@ async def ai_help(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         chat_completion = client.chat.completions.create(
             messages=[{"role": "user", "content": query}],
-            model="llama3-8b-8192",
+            model="llama-3.1-8b-instant",   # Güncel ve hızlı model
             temperature=0.7,
-            max_tokens=500,
+            max_tokens=700,
         )
         answer = chat_completion.choices[0].message.content
-        await update.message.reply_text(answer[:4000])  # Telegram limit için
+        await update.message.reply_text(answer[:4000], parse_mode='Markdown')
     except Exception as e:
-        await update.message.reply_text(f"❌ AI hatası: {str(e)[:300]}")
+        await update.message.reply_text(f"❌ AI hatası: {str(e)[:400]}")
