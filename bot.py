@@ -1,13 +1,17 @@
 import logging
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackQueryHandler
-from config import TOKEN, LOG_CHANNEL, OWNER_ID
+
+from config import TOKEN, LOG_CHANNEL, OWNER_IDS
 import handlers.admin as admin_h
 import handlers.user as user_h
 import handlers.moderation as mod
 import handlers.ai_help as ai_h
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
 
 async def start(update: Update, context):
     await update.message.reply_text(
