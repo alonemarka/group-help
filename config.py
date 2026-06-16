@@ -3,12 +3,16 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-TOKEN = os.getenv("8959507942:AAGyl_GNhVz1_6P1yO-0PpDun-txFUw8gvY")
-LOG_CHANNEL = os.getenv("-1004426556227")  # -100xxxxxxxxxx
-OWNER_ID = int(os.getenv("8973632679"))
-GROQ_API_KEY = os.getenv("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")
+TOKEN = os.getenv("BOT_TOKEN")
+OWNER_ID = int(os.getenv("OWNER_ID", 0))
+LOG_CHANNEL = int(os.getenv("LOG_CHANNEL", 0))
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
-# Filtre ayarları
+# Moderasyon Ayarları
 ANTI_FLOOD = True
-FLOOD_LIMIT = 5
-FLOOD_TIME = 10
+FLOOD_LIMIT = 6
+FLOOD_TIME = 8
+
+# Diğer ayarlar
+WELCOME_ENABLED = True
+GOODBYE_ENABLED = True
