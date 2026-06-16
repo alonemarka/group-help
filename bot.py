@@ -17,67 +17,21 @@ async def start(update: Update, context):
     await update.message.reply_text(
         "✅ **Group Help Bot Başarıyla Aktif!**\n\n"
         "Gruba yönetici olarak ekleyin ve keyfini çıkarın.\n\n"
-        "Komutları öğrenmek için → /help",
+        "Tüm komutlar için → /help",
         parse_mode='Markdown'
     )
 
 async def help_command(update: Update, context):
     keyboard = [
-        [InlineKeyboardButton("📋 Genel Komutlar", callback_data="help_general")],
+        [InlineKeyboardButton("📋 Genel Komutlar", callback_data="help_commands")],
         [InlineKeyboardButton("🛠️ Admin Komutları", callback_data="help_admin")],
         [InlineKeyboardButton("🤖 AI Yardım", callback_data="help_ai")],
         [InlineKeyboardButton("⚙️ Moderasyon", callback_data="help_mod")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
-    text = (
-        "🤖 **Group Help Bot - Komut Listesi**\n\n"
-        "Aşağıdaki butonlardan istediğin kategoriyi seç.\n"
-        "Tüm admin komutları **reply** ile kullanılır."
-    )
+    text = "🤖 **Group Help Bot - Yardım Menüsü**\n\nAşağıdan kategori seç:"
     await update.message.reply_text(text, reply_markup=reply_markup, parse_mode='Markdown')
-
-async def button_callback(update: Update, context):
-    query = update.callback_query
-    await query.answer()
-
-    if query.data == "help_general":
-        text = (
-            "📋 **Genel Komutlar**\n\n"
-            "• `/start` - Botu başlat\n"
-            "• `/help` - Bu menüyü göster\n"
-            "• `/rules` - Grup kurallarını göster\n"
-            "• `/info` - Kullanıcı bilgisi (kendin veya reply)\n"
-            "• `/ai <soru>` - AI ile akıllı cevap al"
-        )
-elif query.data == "help_admin":
-        text = (
-            "🛠️ **Admin Komutları** (Reply ile kullan)\n\n"
-            "• `/warn` - Uyarı ver\n"
-            "• `/mute` - Sustur\n"
-            "• `/unmute` - Susturmayı kaldır\n"
-            "• `/kick` - At\n"
-            "• `/ban` - Banla\n"
-            "• `/purge` - Mesajları temizle\n"
-            "• `/promote` veya `/admin` - Admin yap (reply, @user veya ID ile)\n"
-            "• `/demote` veya `/unadmin` - Adminliği kaldır (reply, @user veya ID ile)"
-        )
-    elif query.data == "help_ai":
-        text = (
-            "🤖 **AI Yardım**\n\n"
-            "`/ai merhaba nasılsın?`\n"
-            "`/ai Python öğrenmek istiyorum`\n\n"
-            "ai ile hızlı ve akıllı cevaplar alır."
-        )
-    elif query.data == "help_mod":
-        text = (
-            "⚙️ **Otomatik Moderasyon**\n\n"
-            "• Anti-Flood (çok hızlı mesaj)\n"
-            "• Log Kanalı (tüm işlemler loglanır)\n"
-            "• Admin + Owner kontrolü"
-        )
-    
-    await query.edit_message_text(text, parse_mode='Markdown')
 
 def main():
     app = Application.builder().token(TOKEN).build()
@@ -91,6 +45,8 @@ def main():
     app.add_handler(CommandHandler("info", user_h.user_info))
     
     # Admin Komutları
+    app.add_handler(CommandHandler(["promote", "admin"], admin_h.promote))
+    app.add_handler(CommandHandler(["demote", "unadmin"], admin_h.demote))
     app.add_handler(CommandHandler("warn", admin_h.warn))
     app.add_handler(CommandHandler("mute", admin_h.mute))
     app.add_handler(CommandHandler("unmute", admin_h.unmute))
@@ -104,8 +60,8 @@ def main():
     # AI
     app.add_handler(CommandHandler("ai", ai_h.ai_help))
     
-    # Butonlar
-    app.add_handler(CallbackQueryHandler(button_callback))
+    # Buton Callback
+    app.add_handler(CallbackQueryHandler(user_h.button_callback))
 
     print("🤖 Aşırı Gelişmiş Group Help Bot Başladı!")
     app.run_polling(allowed_updates=Update.ALL_TYPES)
