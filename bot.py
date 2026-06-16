@@ -50,7 +50,7 @@ async def button_callback(update: Update, context):
             "• `/info` - Kullanıcı bilgisi (kendin veya reply)\n"
             "• `/ai <soru>` - AI ile akıllı cevap al"
         )
-    elif query.data == "help_admin":
+elif query.data == "help_admin":
         text = (
             "🛠️ **Admin Komutları** (Reply ile kullan)\n\n"
             "• `/warn` - Uyarı ver\n"
@@ -58,7 +58,9 @@ async def button_callback(update: Update, context):
             "• `/unmute` - Susturmayı kaldır\n"
             "• `/kick` - At\n"
             "• `/ban` - Banla\n"
-            "• `/purge` - Mesajları temizle"
+            "• `/purge` - Mesajları temizle\n"
+            "• `/promote` veya `/admin` - Admin yap (reply, @user veya ID ile)\n"
+            "• `/demote` veya `/unadmin` - Adminliği kaldır (reply, @user veya ID ile)"
         )
     elif query.data == "help_ai":
         text = (
