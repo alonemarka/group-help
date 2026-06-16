@@ -48,7 +48,7 @@ async def button_callback(update: Update, context):
             "• `/help` - Bu menüyü göster\n"
             "• `/rules` - Grup kurallarını göster\n"
             "• `/info` - Kullanıcı bilgisi (kendin veya reply)\n"
-            "• `/ai <soru>` - Groq AI ile akıllı cevap al"
+            "• `/ai <soru>` - AI ile akıllı cevap al"
         )
     elif query.data == "help_admin":
         text = (
@@ -65,7 +65,7 @@ async def button_callback(update: Update, context):
             "🤖 **AI Yardım**\n\n"
             "`/ai merhaba nasılsın?`\n"
             "`/ai Python öğrenmek istiyorum`\n\n"
-            "Groq ile hızlı ve akıllı cevaplar alır."
+            "ai ile hızlı ve akıllı cevaplar alır."
         )
     elif query.data == "help_mod":
         text = (
